@@ -56,15 +56,37 @@ pub enum Type {
     Bool,
     SInt32,
     UInt32,
+    UInt64,
     Double,
     Float,
     String,
-    List { types: Vec<Type> },
-    Tuple { types: Vec<Type> },
-    Class { service: String, name: String },
-    Enumeration { service: String, name: String },
-    Dictionary { types: Vec<Type> },
-    Set { types: Vec<Type> },
+    List {
+        types: Vec<Type>,
+    },
+    Tuple {
+        types: Vec<Type>,
+    },
+    Class {
+        service: String,
+        name: String,
+    },
+    Enumeration {
+        service: String,
+        name: String,
+    },
+    Dictionary {
+        types: Vec<Type>,
+    },
+    Set {
+        types: Vec<Type>,
+    },
+    Bytes,
+    Status,
+    Event,
+    #[serde(rename = "PROCEDURE_CALL")]
+    ProcedureCall,
+    Services,
+    Stream,
 }
 
 impl Type {
@@ -73,6 +95,7 @@ impl Type {
             Type::Bool => "bool".to_string(),
             Type::SInt32 => "i32".to_string(),
             Type::UInt32 => "u32".to_string(),
+            Type::UInt64 => "u64".to_string(),
             Type::Double => "f64".to_string(),
             Type::Float => "f32".to_string(),
             Type::String => "String".to_string(),
@@ -107,6 +130,12 @@ impl Type {
                 let member = types.first().expect("Malformed set type").to_rust_type();
                 format!("std::collections::HashSet<{member}>")
             }
+            Type::Bytes => "Vec<u8>".to_string(),
+            Type::Status => "String".to_string(),
+            Type::Event => "::krpc_mars::krpc::Event".to_string(),
+            Type::ProcedureCall => "::krpc_mars::krpc::ProcedureCall".to_string(),
+            Type::Services => "::krpc_mars::krpc::Services".to_string(),
+            Type::Stream => "::krpc_mars::krpc::Services".to_string(),
         }
     }
 }
