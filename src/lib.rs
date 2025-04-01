@@ -72,7 +72,10 @@ fn format_proc_name(
 
     match val {
         tera::Value::String(s) => {
-            let s = s.to_snake_case();
+            let mut s = s.to_snake_case();
+            if s == "where" {
+                s = "r#where".to_string();
+            }
             Ok(tera::Value::String(s))
         }
         _ => Err(tera::Error::call_filter("format_proc_name", "Not a string")),
