@@ -149,7 +149,7 @@ pub struct Enum {
 #[derive(Debug, Clone, serde::Deserialize, serde::Serialize)]
 pub struct EnumValue {
     pub name: String,
-    pub value: u32,
+    pub value: i32,
 }
 
 impl ServiceFile {
