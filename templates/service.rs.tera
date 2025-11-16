@@ -87,7 +87,7 @@ impl {{ name }} {
 {% endfor %}
 
 {% for name, def in service_enumerations %}
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum {{ name }} {
 {%- for val_def in def.values %}
     {{ val_def.name }} = {{ val_def.value }},
